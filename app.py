@@ -51,7 +51,7 @@ def test():
     render.save(buf, format='JPEG')
     buf.seek(0)
     # Return the image as a file attachment
-    return send_file(buf, mimetype='image/jpeg', as_attachment=True, download_name='result.jpg')
+    return send_file(buf, mimetype='image/jpeg')
 
 
     # if request.method == "GET":
