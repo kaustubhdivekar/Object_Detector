@@ -1,1 +1,1 @@
-# image_descriptor
+# Object_detection using UltralyticsPlus (Yolov8)

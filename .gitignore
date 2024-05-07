@@ -1,5 +1,5 @@
 venv/
 ultralyticsplus/
 key
-.pub
-.pt
+key.pub
+yolov8n.pt
