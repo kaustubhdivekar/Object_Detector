@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, render_template
 from ultralyticsplus import YOLO, render_result
 import requests
 from PIL import Image
@@ -6,6 +6,11 @@ import io
 from transformers import BlipProcessor, BlipForConditionalGeneration
 
 app = Flask(__name__)
+
+@app.route("/")
+
+def home():
+    return render_template("home.html")
 
 @app.route('/test', methods=['GET', 'POST'])
 
@@ -20,10 +25,13 @@ def test():
     model.overrides['max_det'] = 1000  # maximum number of detections per image
 
     # set image
-    req_Json = request.json
-    image = req_Json['image']
+    # req_Json = request.json
+    # image = req_Json['image']
     # https://github.com/ultralytics/yolov5/raw/master/data/images/zidane.jpg
     # https://cdn.roadtrips.com/wp-content/uploads/2017/09/semi-final-1920x1063.jpg
+
+    if request.method == 'POST':
+        image = request.form.get('image')
 
     # perform inference
     results = model.predict(image)
@@ -60,8 +68,13 @@ def test2():
     model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-large")
 
     # input from user
-    req_Json = request.json
-    image = req_Json['image']
+    # req_Json = request.json
+    # image = req_Json['image']
+
+    if request.method == 'POST':
+        # set image
+        image = request.form.get('image')
+
 
     # image = 'https://storage.googleapis.com/sfr-vision-language-research/BLIP/demo.jpg' 
     raw_image = Image.open(requests.get(image, stream=True).raw).convert('RGB')
